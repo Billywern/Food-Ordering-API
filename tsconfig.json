@@ -4,7 +4,13 @@
     "module": "commonjs",
     "rootDir": "./",
     "outDir": "./build",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
-    "strict": true
-  }
+    "strict": true,
+  },
+  "include": [
+    "typing.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ]
 }
