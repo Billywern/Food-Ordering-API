@@ -1,5 +1,6 @@
 import app from '../../connect'
-import { getListOfRestaurant } from '../../usecase/GetRestaurant'
+import { getParticularResturantWithMenuId, getSingleRestaurant, getListOfRestaurant } from '../../usecase/restaurants'
+import { getPastOrders, sendOrders } from '../../usecase/restaurantOrders'
 
 export const RESTAURANTS_CONTROLLER_ROUTES = {
   RESTAURANTS_LIST: '/restaurants',
@@ -17,5 +18,37 @@ app.get(RESTAURANTS_CONTROLLER_ROUTES.RESTAURANTS_LIST, (_req, res) => {
 })
 
 app.get(RESTAURANTS_CONTROLLER_ROUTES.RESTAURANTS_PAST_ORDERS, (_req, res) => {
-  res.status(200).json({ data: [] } )
+  const pastOrders = getPastOrders()
+  if (!pastOrders.data) {
+    res.status(400).json({message: 'Data not found'})
+  } else {
+    res.status(200).json(pastOrders)
+  }
 })
+
+app.post(RESTAURANTS_CONTROLLER_ROUTES.restaurants_ORDER, async (req, res) => {
+  const sendOrderRequest: SendOrderRequest = req.body
+  console.log('sendOrderRequest', req.body)
+  const { restaurantId, menuIds } = sendOrderRequest
+  if (!restaurantId) {
+    res.status(400).json({message: 'Restaurant Id not found'})
+  }
+  const restaurantDetails = getSingleRestaurant(restaurantId)
+  if (!restaurantDetails.data || restaurantDetails.data.restaurantId !== restaurantId) {
+    res.status(400).json({message: 'Restaurant not found'})
+  }
+
+  const menuDetails = getParticularResturantWithMenuId(menuIds, restaurantDetails.data)
+  if (!menuDetails.data || menuDetails.data.length === 0) {
+    res.status(400).json({message: 'Menu not found'})
+  }
+  const sendOrderStatus = await sendOrders(restaurantDetails.data, menuDetails.data)
+  res.status(200).json({
+    ...sendOrderStatus
+  })
+})
+
+interface SendOrderRequest {
+  restaurantId: string
+  menuIds: string[]
+}

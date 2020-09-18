@@ -7,10 +7,5 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strict": true,
-  },
-  "include": [
-    "typing.d.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx"
-  ]
+  }
 }

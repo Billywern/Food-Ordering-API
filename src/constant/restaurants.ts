@@ -1,7 +1,4 @@
-export interface RestaurantsResp {
-  restaurants: Restaurants[]
-}
-export interface Restaurants {
+export interface Restaurant {
   restaurantId: string
   name: string
   operationHours: OperationHours
@@ -9,12 +6,12 @@ export interface Restaurants {
   menu: menuItem[]
 }
 
-interface OperationHours {
+export interface OperationHours {
   startTime: string
   endTime: string
 }
 
-interface menuItem {
+export interface menuItem {
   menuId: string
   name: string
   price: number

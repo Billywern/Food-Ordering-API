@@ -135,7 +135,7 @@ storeData = async (data) => {
    * To create a restaurants json that act as a restaurant database
    */
   try {
-    await fs.writeFileSync('restaurants.json', JSON.stringify(data))
+    await fs.writeFileSync(`${process.cwd()}/database/restaurants.json`, JSON.stringify(data))
   } catch (err) {
     console.log('Error in storing data', err)
   }
