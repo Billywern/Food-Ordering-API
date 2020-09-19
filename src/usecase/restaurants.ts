@@ -1,3 +1,4 @@
+import moment from 'moment'
 import restaurantData from '../../database/restaurants.json'
 import { Restaurant, menuItem} from '../constant/restaurants'
 
@@ -5,8 +6,22 @@ export const getListOfRestaurant = (): GetRestaurantDataResponse => {
   if (!restaurantData) {
     return { data: [] }
   }
-  let data = restaurantData.restaurants
-  return {data}
+  let data: Restaurant[] = restaurantData.restaurants
+
+  const newData = data.map((restaurantDetail) => {
+    const now = moment()
+    const currentDay = now.format("dddd")
+    const currentTime = now.format("HHmm").toString()
+    restaurantDetail.isAvailable = true
+    if (!restaurantDetail.offDays.includes(currentDay) ||
+      restaurantDetail.operationHours.startTime > currentTime ||
+      restaurantDetail.operationHours.endTime < currentTime
+    ) {
+      restaurantDetail.isAvailable = false
+    }
+    return restaurantDetail
+  })
+  return {data: newData}
 }
 
 export const getSingleRestaurant = (restaurantId: string): GetSingleRestaurantDataResponse => {

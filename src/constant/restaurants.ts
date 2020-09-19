@@ -4,6 +4,7 @@ export interface Restaurant {
   operationHours: OperationHours
   offDays: string[]
   menu: menuItem[]
+  isAvailable?: boolean
 }
 
 export interface OperationHours {
