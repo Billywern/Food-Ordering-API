@@ -13,7 +13,7 @@ export const getListOfRestaurant = (): GetRestaurantDataResponse => {
     const currentDay = now.format("dddd")
     const currentTime = now.format("HHmm").toString()
     restaurantDetail.isAvailable = true
-    if (!restaurantDetail.offDays.includes(currentDay) ||
+    if (restaurantDetail.offDays.includes(currentDay) ||
       restaurantDetail.operationHours.startTime > currentTime ||
       restaurantDetail.operationHours.endTime < currentTime
     ) {

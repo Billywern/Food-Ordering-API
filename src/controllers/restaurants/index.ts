@@ -28,21 +28,21 @@ app.get(RESTAURANTS_CONTROLLER_ROUTES.RESTAURANTS_PAST_ORDERS, (_req, res) => {
 
 app.post(RESTAURANTS_CONTROLLER_ROUTES.restaurants_ORDER, async (req, res) => {
   const sendOrderRequest: SendOrderRequest = req.body
-  console.log('sendOrderRequest', req.body)
-  const { restaurantId, menuIds } = sendOrderRequest
-  if (!restaurantId) {
-    res.status(400).json({message: 'Restaurant Id not found'})
+  const { restaurantId, menuIds, deliverBy } = sendOrderRequest
+
+  if (!restaurantId || !deliverBy || !menuIds) {
+    res.status(400).json({message: 'Missing request body'})
   }
   const restaurantDetails = getSingleRestaurant(restaurantId)
   if (!restaurantDetails.data || restaurantDetails.data.restaurantId !== restaurantId) {
-    res.status(400).json({message: 'Restaurant not found'})
+    res.status(400).json({message: 'Restaurant not found.'})
   }
 
   const menuDetails = getParticularResturantWithMenuId(menuIds, restaurantDetails.data)
   if (!menuDetails.data || menuDetails.data.length === 0) {
-    res.status(400).json({message: 'Menu not found'})
+    res.status(400).json({message: 'Menu not found.'})
   }
-  const sendOrderStatus = await sendOrders(restaurantDetails.data, menuDetails.data)
+  const sendOrderStatus = await sendOrders(restaurantDetails.data, menuDetails.data, deliverBy)
   res.status(200).json({
     ...sendOrderStatus
   })
@@ -51,4 +51,5 @@ app.post(RESTAURANTS_CONTROLLER_ROUTES.restaurants_ORDER, async (req, res) => {
 interface SendOrderRequest {
   restaurantId: string
   menuIds: string[]
+  deliverBy: string
 }

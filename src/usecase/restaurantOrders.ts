@@ -12,7 +12,7 @@ export const getPastOrders = (): GetPastOrdersResponse => {
   return {data: pastOrderData.pastOrders}
 }
 
-export const sendOrders = async (restaurant?: Restaurant, chosenMenu?: Array<menuItem | unknown>): Promise<SendOrdersResponse> => {
+export const sendOrders = async (restaurant?: Restaurant, chosenMenu?: Array<menuItem | unknown>, deliverBy?: string): Promise<SendOrdersResponse> => {
   let isOrdered = false
   if (!restaurant || !chosenMenu) {
     return { isOrdered }
@@ -24,6 +24,7 @@ export const sendOrders = async (restaurant?: Restaurant, chosenMenu?: Array<men
       restaurantId: restaurant.restaurantId,
       name: restaurant.name,
       menu: value,
+      deliverBy,
       createdOn: new Date().toString()
     }
     orders.push(newOrder)

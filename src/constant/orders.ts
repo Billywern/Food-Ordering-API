@@ -5,5 +5,6 @@ export interface Order {
   restaurantId: string
   name: string
   menu: menuItem
+  deliverBy: string
   createdOn: string
 }
