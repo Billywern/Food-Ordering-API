@@ -3,6 +3,11 @@ import restaurantData from '../../database/restaurants.json'
 import { Restaurant, menuItem} from '../constant/restaurants'
 
 export const getListOfRestaurant = (): GetRestaurantDataResponse => {
+  /**
+   * @description
+   * To get a list of retaurant from restaurants json file and
+   * set its availability based on the off days and operation hours.
+   */
   if (!restaurantData) {
     return { data: [] }
   }
@@ -25,6 +30,10 @@ export const getListOfRestaurant = (): GetRestaurantDataResponse => {
 }
 
 export const getSingleRestaurant = (restaurantId: string): GetSingleRestaurantDataResponse => {
+  /**
+   * @description
+   * Get restaurant details based on the restaurant Id
+   */
 
   const restaurantDetails = restaurantData.restaurants.find((value) => value.restaurantId === restaurantId)
 
@@ -34,7 +43,10 @@ export const getSingleRestaurant = (restaurantId: string): GetSingleRestaurantDa
 }
 
 export const getParticularResturantWithMenuId = (menuIds: string[], restaurant?: Restaurant): GetParticularResturantWithMenuIdResponse => {
-
+  /**
+   * @description
+   * Filter restaurant's menu based on the menu that user chose
+   */
   if (!restaurant || !menuIds) {
     return {
       data: []

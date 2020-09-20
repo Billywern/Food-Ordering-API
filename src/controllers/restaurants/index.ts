@@ -8,6 +8,11 @@ export const RESTAURANTS_CONTROLLER_ROUTES = {
   restaurants_ORDER: '/restaurants/order'
 }
 app.get(RESTAURANTS_CONTROLLER_ROUTES.RESTAURANTS_LIST, (_req, res) => {
+  /**
+   * @method GET
+   * @description
+   * To get list of restaurant
+   */
   const restaurants = getListOfRestaurant()
 
   if (!restaurants) {
@@ -18,6 +23,11 @@ app.get(RESTAURANTS_CONTROLLER_ROUTES.RESTAURANTS_LIST, (_req, res) => {
 })
 
 app.get(RESTAURANTS_CONTROLLER_ROUTES.RESTAURANTS_PAST_ORDERS, (_req, res) => {
+  /**
+   * @method GET
+   * @description
+   * To get order histories
+   */
   const pastOrders = getPastOrders()
   if (!pastOrders.data) {
     res.status(400).json({message: 'Data not found'})
@@ -27,6 +37,12 @@ app.get(RESTAURANTS_CONTROLLER_ROUTES.RESTAURANTS_PAST_ORDERS, (_req, res) => {
 })
 
 app.post(RESTAURANTS_CONTROLLER_ROUTES.restaurants_ORDER, async (req, res) => {
+  /**
+   * @method POST
+   * @description
+   * To place order based on restaurant Id, chose menu and deliver date that was
+   * decided by the user.
+   */
   const sendOrderRequest: SendOrderRequest = req.body
   const { restaurantId, menuIds, deliverBy } = sendOrderRequest
 

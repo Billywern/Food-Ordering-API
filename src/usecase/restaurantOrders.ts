@@ -6,6 +6,10 @@ import fs from 'fs'
 const uuid = require('uuid')
 
 export const getPastOrders = (): GetPastOrdersResponse => {
+  /**
+   * @description
+   * Get order histories from past orders json file
+   */
   if (!pastOrderData) {
     return { data: [] }
   }
@@ -13,6 +17,10 @@ export const getPastOrders = (): GetPastOrdersResponse => {
 }
 
 export const sendOrders = async (restaurant?: Restaurant, chosenMenu?: Array<menuItem | unknown>, deliverBy?: string): Promise<SendOrdersResponse> => {
+  /**
+   * @description
+   * To generate new orders with chosen deliver date and save into past order json
+   */
   let isOrdered = false
   if (!restaurant || !chosenMenu) {
     return { isOrdered }

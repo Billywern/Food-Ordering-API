@@ -5,6 +5,7 @@ const fs = require('fs')
 
 readExcelFile = async () => {
   /**
+   * @description
    * To read csv file and convert to json
    */
   try {
@@ -21,7 +22,8 @@ readExcelFile = async () => {
 
 filterRawData = async (data) => {
   /**
-   *  To filter data that was converted from csv to an array of rows
+   * @description
+   * To filter data that was converted from csv to an array of rows
    */
   const filteredData = data.map((rawData, index) => {
     const newData = {}
@@ -78,7 +80,8 @@ filterRawData = async (data) => {
 }
 filterOffDays = (offDays) => {
   /**
-   *  To filter the off days of the restaurant.
+   * @description
+   * To filter the off days of the restaurant.
    */
   const filteredOffDays = offDays.split(',').map((offDay) =>  {
     return moment(offDay.replace(/\s/g, ''), ["dddd"]).format("dddd")
@@ -92,6 +95,7 @@ filterOffDays = (offDays) => {
 }
 filterOperationHours = (operationHours) => {
   /**
+   * @description
    * To filter the operation hours of the restaurant to start time and end time.
    */
   const filteredOperationHours = operationHours.split('-').map((operationHour) => {
@@ -115,6 +119,7 @@ filterOperationHours = (operationHours) => {
 }
 filterSetMenuToNameAndPrice = (set) => {
   /**
+   * @description
    * To filter the set to name and price and a menu Id.
    */
   const name = set.substr(0, set.indexOf(' - MYR'))
@@ -132,6 +137,7 @@ filterSetMenuToNameAndPrice = (set) => {
 }
 storeData = async (data) => {
   /**
+   * @description
    * To create a restaurants json that act as a restaurant database
    */
   try {
